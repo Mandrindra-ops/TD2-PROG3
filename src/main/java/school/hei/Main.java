@@ -1,4 +1,4 @@
-package org.example;
+package school.hei;
 
 
 public class Main {
@@ -12,4 +12,4 @@ public class Main {
             System.out.println("i = " + i);
         }
     }
-})
+}

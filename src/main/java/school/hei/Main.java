@@ -1,3 +1,5 @@
+package school.hei;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -5,7 +7,7 @@ public class Main {
 
         System.out.println("=== Test récupération plat et calcul coût ===");
         try {
-            Dish dish = retriever.findDishById(1); // Change 1 par un ID qui existe
+            Dish dish = retriever.findDishById(1);
             if (dish == null) {
                 System.out.println("Plat non trouvé");
             } else {
@@ -16,13 +18,14 @@ public class Main {
             System.out.println("ERREUR : " + e.getMessage());
         }
 
+
+
         System.out.println("\n=== Test sauvegarde plat et modification prix de vente ===");
         Dish dishToSave = new Dish();
-        dishToSave.setId(1); // Même ID → mise à jour
+        dishToSave.setId(1);
         dishToSave.setName("Mon super plat");
         dishToSave.setSellingPrice(22000.0);
 
-        // À adapter si saveDish est dans DataRetriever
         Dish savedDish = Dish.saveDish(dishToSave);
 
         System.out.println("Plat sauvegardé : " + savedDish);
@@ -33,5 +36,6 @@ public class Main {
         } catch (RuntimeException e) {
             System.out.println("ERREUR coût : " + e.getMessage());
         }
+
     }
 }

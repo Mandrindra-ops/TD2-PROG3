@@ -1,15 +1,37 @@
-package school.hei;
-
 
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        DataRetriever retriever = new DataRetriever();
 
-        for (int i = 1; i <= 5; i++) {
+        System.out.println("=== Test récupération plat et calcul coût ===");
+        try {
+            Dish dish = retriever.findDishById(1); // Change 1 par un ID qui existe
+            if (dish == null) {
+                System.out.println("Plat non trouvé");
+            } else {
+                System.out.println(dish);
+                System.out.println("Coût du plat : " + dish.getDishCost() + " Ar");
+            }
+        } catch (RuntimeException e) {
+            System.out.println("ERREUR : " + e.getMessage());
+        }
 
-            System.out.println("i = " + i);
+        System.out.println("\n=== Test sauvegarde plat et modification prix de vente ===");
+        Dish dishToSave = new Dish();
+        dishToSave.setId(1); // Même ID → mise à jour
+        dishToSave.setName("Mon super plat");
+        dishToSave.setSellingPrice(22000.0);
+
+        // À adapter si saveDish est dans DataRetriever
+        Dish savedDish = Dish.saveDish(dishToSave);
+
+        System.out.println("Plat sauvegardé : " + savedDish);
+        System.out.println("Nouveau prix de vente : " + savedDish.getSellingPrice() + " Ar");
+
+        try {
+            System.out.println("Coût après sauvegarde : " + savedDish.getDishCost() + " Ar");
+        } catch (RuntimeException e) {
+            System.out.println("ERREUR coût : " + e.getMessage());
         }
     }
 }

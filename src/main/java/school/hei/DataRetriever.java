@@ -1,4 +1,3 @@
-package school.hei;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -6,7 +5,6 @@ import java.util.List;
 
 public class DataRetriever {
     private DBConnection db = new DBConnection();
-
 
     public Dish findDishById(int id) {
         try (Connection conn = db.getConnection()) {
@@ -22,7 +20,6 @@ public class DataRetriever {
             dish.setName(rs.getString("name"));
             dish.setDishType(DishTypeEnum.valueOf(rs.getString("dish_type")));
 
-
             String sql2 = "SELECT * FROM \"Ingredient\" WHERE id_dish = ?";
             PreparedStatement ps2 = conn.prepareStatement(sql2);
             ps2.setInt(1, id);
@@ -35,6 +32,10 @@ public class DataRetriever {
                 ing.setName(rs2.getString("name"));
                 ing.setPrice(rs2.getDouble("price"));
                 ing.setCategory(CategoryEnum.valueOf(rs2.getString("category")));
+
+                Double rq = rs2.getDouble("required_quantity");
+                ing.setRequiredQuantity(rs2.wasNull() ? null : rq);
+
                 ingredients.add(ing);
             }
             dish.setIngredients(ingredients);
@@ -44,7 +45,6 @@ public class DataRetriever {
             throw new RuntimeException(e);
         }
     }
-
 
     public List<Ingredient> findIngredients(int page, int size) {
         try (Connection conn = db.getConnection()) {
@@ -62,6 +62,10 @@ public class DataRetriever {
                 ing.setName(rs.getString("name"));
                 ing.setPrice(rs.getDouble("price"));
                 ing.setCategory(CategoryEnum.valueOf(rs.getString("category")));
+
+                Double rq = rs.getDouble("required_quantity");
+                ing.setRequiredQuantity(rs.wasNull() ? null : rq);
+
                 ingredients.add(ing);
             }
             return ingredients;
